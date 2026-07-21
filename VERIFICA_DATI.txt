@@ -1,19 +1,9 @@
 VERIFICA DATI
 
-Il foglio BASE DATI ora termina correttamente alla riga 1182 e contiene 1.181 record.
+Nel file Excel la dicitura presente nella colonna A non è “Regionale” al singolare,
+ma “Regionali” al plurale.
 
-Sono però presenti due differenze tra BASE DATI e il riepilogo ATTIVITà:
+Il sito riconosce entrambe le forme tramite il controllo del prefisso “regional”,
+quindi eventuali varianti “Regionale” o “Regionali” vengono comunque incluse.
 
-1. Nel foglio BASE DATI è presente una riga:
-   Pallavolo | Campania | Napoli | categoria vuota | 1 squadra | Squadre insufficienti.
-
-2. Nel foglio ATTIVITà compare:
-   Pallavolo | Under 10 (Minivolley) | Lombardia | 6 squadre,
-   ma questa voce non è presente nel foglio BASE DATI.
-
-Di conseguenza:
-- totale BASE DATI: 16.318 squadre;
-- somma delle righe regionali lette dal foglio ATTIVITà: 16.323 squadre.
-
-Il sito mantiene il riepilogo del foglio ATTIVITà nel primo tab, come richiesto,
-mentre KPI e tabelle di dettaglio derivano da BASE DATI.
+Righe regionali rilevate nel file: 199.

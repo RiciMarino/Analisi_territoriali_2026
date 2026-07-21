@@ -89,6 +89,7 @@ table.dataTable tbody td{font-size:.86rem;vertical-align:middle}
 
  <nav class="tabs">
   <button class="tabbtn active" data-pane="summaryPane">Riepilogo attività</button>
+  <button class="tabbtn" data-pane="regionalPane">Attività regionali <span class="badge" id="regionalCount">0</span></button>
   <button class="tabbtn" data-pane="okPane">Soddisfa C.U. <span class="badge" id="okCount">0</span></button>
   <button class="tabbtn" data-pane="notPane">Non soddisfa C.U. <span class="badge" id="notCount">0</span></button>
   <button class="tabbtn" data-pane="allPane">Mostra dati insieme</button>
@@ -98,6 +99,11 @@ table.dataTable tbody td{font-size:.86rem;vertical-align:middle}
   <div class="pane active" id="summaryPane">
    <p class="small-note">Per ogni disciplina e categoria, le regioni sono ordinate per numero di squadre in ordine decrescente.</p>
    <div id="summaryContainer"></div>
+  </div>
+
+  <div class="pane" id="regionalPane">
+   <p class="small-note">Sono considerate esclusivamente le righe del foglio BASE DATI in cui la colonna Tipo contiene “Regionali”. Per ogni disciplina e categoria, le regioni sono ordinate per numero di squadre in ordine decrescente.</p>
+   <div id="regionalContainer"></div>
   </div>
 
   <div class="pane" id="okPane">
@@ -191,6 +197,55 @@ function renderSummary(){
  });
  document.getElementById('summaryContainer').innerHTML=out||'<div class="text-muted">Nessun dato corrispondente ai filtri.</div>';
 }
+function renderRegionalSummary(){
+ const fDisc=norm($('#fDisc').val()),fCat=norm($('#fCat').val()),fReg=norm($('#fReg').val()),fCom=norm($('#fCom').val());
+
+ const regionalRows=BASE_DATA.filter(x=>{
+  const tipo=norm(x.Tipo).toLocaleLowerCase('it');
+  return tipo.startsWith('regional') &&
+         (!fDisc||x.Disciplina===fDisc) &&
+         (!fCat||x.Categoria===fCat) &&
+         (!fReg||x.Regione===fReg) &&
+         (!fCom||x.Comitato===fCom);
+ });
+
+ const aggregate={};
+ regionalRows.forEach(x=>{
+  const key=x.Disciplina+'|||'+x.Categoria+'|||'+x.Regione;
+  if(!aggregate[key]){
+   aggregate[key]={
+    Disciplina:x.Disciplina,
+    Categoria:x.Categoria,
+    Regione:x.Regione,
+    Squadre:0,
+    Comitati:new Set()
+   };
+  }
+  aggregate[key].Squadre+=Number(x.Squadre||0);
+  if(norm(x.Comitato)) aggregate[key].Comitati.add(x.Comitato);
+ });
+
+ const grouped={};
+ Object.values(aggregate).forEach(x=>{
+  const key=x.Disciplina+'|||'+x.Categoria;
+  (grouped[key]??=[]).push(x);
+ });
+
+ let out='';
+ Object.keys(grouped).sort((a,b)=>a.localeCompare(b,'it')).forEach(key=>{
+  const [disc,cat]=key.split('|||');
+  const items=grouped[key].sort((a,b)=>b.Squadre-a.Squadre || a.Regione.localeCompare(b.Regione,'it'));
+  out+=`<div class="group-card"><div class="group-title"><span>${esc(disc)} · ${esc(cat)}</span><span>${fmt(items.reduce((s,x)=>s+x.Squadre,0))} squadre</span></div>
+  <div class="table-responsive"><table class="table table-sm table-striped summary-table mb-0">
+  <thead><tr><th>Regione</th><th>Comitati</th><th>Squadre</th></tr></thead><tbody>`;
+  items.forEach(x=>out+=`<tr><td>${esc(x.Regione)}</td><td>${fmt(x.Comitati.size)}</td><td><strong>${fmt(x.Squadre)}</strong></td></tr>`);
+  out+='</tbody></table></div></div>';
+ });
+
+ document.getElementById('regionalContainer').innerHTML=out||'<div class="text-muted">Nessuna attività regionale corrispondente ai filtri.</div>';
+ document.getElementById('regionalCount').textContent=regionalRows.length;
+}
+
 function applyFilters(){
  const vals=[norm($('#fDisc').val()),norm($('#fCat').val()),norm($('#fReg').val()),norm($('#fCom').val())];
  [okTable,notTable,okAllTable,notAllTable].forEach(t=>{
@@ -198,6 +253,7 @@ function applyFilters(){
   t.draw();
  });
  renderSummary();
+ renderRegionalSummary();
 }
 $('#fDisc,#fCat,#fReg,#fCom').on('change',applyFilters);
 $('#resetFilters').on('click',()=>{$('#fDisc,#fCat,#fReg,#fCom').val('');applyFilters();});
@@ -209,6 +265,7 @@ document.querySelectorAll('.tabbtn').forEach(btn=>btn.addEventListener('click',(
  setTimeout(()=>$.fn.dataTable.tables({visible:true,api:true}).columns.adjust(),50);
 }));
 renderSummary();
+renderRegionalSummary();
 </script>
 </body>
 </html>
