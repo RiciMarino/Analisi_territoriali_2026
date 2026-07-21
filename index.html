@@ -191,7 +191,7 @@ function renderSummary(){
   const items=groups[key].sort((a,b)=>b.Squadre-a.Squadre || a.Regione.localeCompare(b.Regione,'it'));
   out+=`<div class="group-card"><div class="group-title"><span>${esc(disc)} · ${esc(cat)}</span><span>${fmt(items.reduce((s,x)=>s+x.Squadre,0))} squadre</span></div>
   <div class="table-responsive"><table class="table table-sm table-striped summary-table mb-0">
-  <thead><tr><th>Regione</th><th>Comitati</th><th>Squadre</th></tr></thead><tbody>`;
+  <thead><tr><th>Regione</th><th>Squadre</th></tr></thead><tbody>`;
   items.forEach(x=>out+=`<tr><td>${esc(x.Regione)}</td><td>${fmt(x.Comitati)}</td><td><strong>${fmt(x.Squadre)}</strong></td></tr>`);
   out+='</tbody></table></div></div>';
  });
@@ -237,8 +237,8 @@ function renderRegionalSummary(){
   const items=grouped[key].sort((a,b)=>b.Squadre-a.Squadre || a.Regione.localeCompare(b.Regione,'it'));
   out+=`<div class="group-card"><div class="group-title"><span>${esc(disc)} · ${esc(cat)}</span><span>${fmt(items.reduce((s,x)=>s+x.Squadre,0))} squadre</span></div>
   <div class="table-responsive"><table class="table table-sm table-striped summary-table mb-0">
-  <thead><tr><th>Regione</th><th>Comitati</th><th>Squadre</th></tr></thead><tbody>`;
-  items.forEach(x=>out+=`<tr><td>${esc(x.Regione)}</td><td>${fmt(x.Comitati.size)}</td><td><strong>${fmt(x.Squadre)}</strong></td></tr>`);
+  <thead><tr><th>Regione</th><th>Squadre</th></tr></thead><tbody>`;
+  items.forEach(x=>out+=`<tr><td>${esc(x.Regione)}</td><td><strong>${fmt(x.Squadre)}</strong></td></tr>`);
   out+='</tbody></table></div></div>';
  });
 
