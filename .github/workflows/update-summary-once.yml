@@ -1,0 +1,23 @@
+name: Aggiorna riepilogo una tantum
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-summary-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-summary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python update_summary_logic.py
+      - run: git status --short
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Aggiorna logica riepilogo regionali e provinciali"
+          git push
