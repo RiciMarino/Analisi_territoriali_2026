@@ -88,22 +88,22 @@ table.dataTable tbody td{font-size:.86rem;vertical-align:middle}
  </section>
 
  <nav class="tabs">
-  <button class="tabbtn active" data-pane="summaryPane">Riepilogo attività</button>
-  <button class="tabbtn" data-pane="regionalPane">Attività regionali <span class="badge" id="regionalCount">0</span></button>
+  <button class="tabbtn active" data-pane="regionalPane">Attività regionali <span class="badge" id="regionalCount">0</span></button>
+  <button class="tabbtn" data-pane="summaryPane">Riepilogo attività</button>
   <button class="tabbtn" data-pane="okPane">Soddisfa C.U. <span class="badge" id="okCount">0</span></button>
   <button class="tabbtn" data-pane="notPane">Non soddisfa C.U. <span class="badge" id="notCount">0</span></button>
   <button class="tabbtn" data-pane="allPane">Mostra dati insieme</button>
  </nav>
 
  <section class="panel">
-  <div class="pane active" id="summaryPane">
-   <p class="small-note">Per ogni disciplina e categoria, le regioni sono ordinate per numero di squadre in ordine decrescente.</p>
-   <div id="summaryContainer"></div>
-  </div>
-
-  <div class="pane" id="regionalPane">
+  <div class="pane active" id="regionalPane">
    <p class="small-note">Sono considerate esclusivamente le righe del foglio BASE DATI in cui la colonna Tipo contiene “Regionali”. Per ogni disciplina e categoria, le regioni sono ordinate per numero di squadre in ordine decrescente.</p>
    <div id="regionalContainer"></div>
+  </div>
+
+  <div class="pane" id="summaryPane">
+   <p class="small-note">Per ogni disciplina e categoria, le regioni sono ordinate per numero di squadre in ordine decrescente.</p>
+   <div id="summaryContainer"></div>
   </div>
 
   <div class="pane" id="okPane">
