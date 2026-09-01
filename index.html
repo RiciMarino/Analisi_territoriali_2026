@@ -162,7 +162,10 @@ function updateKpis(){
 updateKpis();
 
 function tableData(status){
- return BASE_DATA.filter(x=>x.Status===status).map(x=>[
+ return BASE_DATA.filter(x=>{
+  const tipo=norm(x.Tipo).toLocaleLowerCase('it');
+  return x.Status===status && !tipo.startsWith('regional');
+ }).map(x=>[
   x.Disciplina,x.Categoria,x.Regione,x.Comitato,x.Squadre,
   x.Note ? `<span class="note-pill">${esc(x.Note)}</span>` : ''
  ]);
