@@ -36,6 +36,7 @@ label{font-size:.76rem;font-weight:700;color:var(--muted);text-transform:upperca
 .tabbtn.active{background:white;color:var(--primary);border-bottom-color:white}
 .tabbtn .badge{background:#ece9e3;color:#666}
 .tabbtn.active .badge{background:var(--primary);color:white}
+.tab-note{font-size:.68em;font-weight:500}
 .panel{background:white;border:1px solid var(--border);border-radius:0 var(--radius) var(--radius) var(--radius);padding:1.25rem}
 .pane{display:none}.pane.active{display:block}
 table.dataTable thead th{background:var(--primary)!important;color:#fff;white-space:nowrap;font-size:.78rem;text-transform:uppercase}
@@ -64,14 +65,12 @@ table.dataTable tbody td{font-size:.86rem;vertical-align:middle}
   </div>
  </div>
 </header>
-
 <section class="kpis">
  <div class="kpi"><strong id="kpiTeams">0</strong><span>Squadre iscritte</span></div>
  <div class="kpi"><strong id="kpiActivities">0</strong><span>Discipline</span></div>
  <div class="kpi"><strong id="kpiCommittees">0</strong><span>Comitati</span></div>
  <div class="kpi" style="border-top-color:var(--warn)"><strong id="kpiNotOk" style="color:var(--warn)">0</strong><span>Campionati non conformi</span></div>
 </section>
-
 <main>
  <section class="cardbox filters">
   <div class="filter-title">Filtri generali</div>
@@ -80,210 +79,36 @@ table.dataTable tbody td{font-size:.86rem;vertical-align:middle}
    <div class="col-12 col-md-3"><label>Comitato</label><select id="fCom" class="form-select"><option value="">Tutti</option></select></div>
    <div class="col-12 col-md-3"><label>Disciplina</label><select id="fDisc" class="form-select"><option value="">Tutte</option></select></div>
    <div class="col-12 col-md-3"><label>Categoria</label><select id="fCat" class="form-select"><option value="">Tutte</option></select></div>
-   <div class="col-12 d-flex gap-2">
-    <button class="btn-light-custom" id="resetFilters">↺ Reset filtri</button>
-    <button class="btn-custom ms-auto" onclick="window.print()">🖨 Stampa / PDF</button>
-   </div>
+   <div class="col-12 d-flex gap-2"><button class="btn-light-custom" id="resetFilters">↺ Reset filtri</button><button class="btn-custom ms-auto" onclick="window.print()">🖨 Stampa / PDF</button></div>
   </div>
  </section>
-
  <nav class="tabs">
   <button class="tabbtn active" data-pane="regionalPane">Attività regionali <span class="badge" id="regionalCount">0</span></button>
   <button class="tabbtn" data-pane="summaryPane">Riepilogo attività</button>
   <button class="tabbtn" data-pane="okPane">Soddisfa C.U. <span class="badge" id="okCount">0</span></button>
   <button class="tabbtn" data-pane="notPane">Non soddisfa C.U. <span class="badge" id="notCount">0</span></button>
-  <button class="tabbtn" data-pane="allPane">Mostra dati insieme</button>
+  <button class="tabbtn" data-pane="allPane">Mostra dati insieme <span class="tab-note">(dati solo provinciali)</span></button>
  </nav>
-
  <section class="panel">
-  <div class="pane active" id="regionalPane">
-   <p class="small-note">Sono considerate esclusivamente le righe del foglio BASE DATI in cui la colonna Tipo contiene “Regionali”. Per ogni disciplina e categoria, le regioni sono ordinate per numero di squadre in ordine decrescente.</p>
-   <div id="regionalContainer"></div>
-  </div>
-
-  <div class="pane" id="summaryPane">
-   <p class="small-note">Per ogni disciplina e categoria, le regioni sono ordinate per numero di squadre in ordine decrescente.</p>
-   <div id="summaryContainer"></div>
-  </div>
-
-  <div class="pane" id="okPane">
-   <div class="table-responsive"><table id="okTable" class="table table-striped table-hover w-100">
-    <thead><tr><th>Disciplina</th><th>Categoria</th><th>Regione</th><th>Comitato</th><th>Squadre</th><th>Note</th></tr></thead>
-   </table></div>
-  </div>
-
-  <div class="pane" id="notPane">
-   <div class="table-responsive"><table id="notTable" class="table table-striped table-hover w-100">
-    <thead><tr><th>Disciplina</th><th>Categoria</th><th>Regione</th><th>Comitato</th><th>Squadre</th><th>Note</th></tr></thead>
-   </table></div>
-  </div>
-
-  <div class="pane" id="allPane">
-   <h3 class="h5" style="color:var(--ok)">Campionati che soddisfano il C.U.</h3>
-   <div class="table-responsive mb-4"><table id="okAllTable" class="table table-striped table-hover w-100">
-    <thead><tr><th>Disciplina</th><th>Categoria</th><th>Regione</th><th>Comitato</th><th>Squadre</th><th>Note</th></tr></thead>
-   </table></div>
-   <h3 class="h5" style="color:var(--warn)">Campionati che non soddisfano il C.U.</h3>
-   <div class="table-responsive"><table id="notAllTable" class="table table-striped table-hover w-100">
-    <thead><tr><th>Disciplina</th><th>Categoria</th><th>Regione</th><th>Comitato</th><th>Squadre</th><th>Note</th></tr></thead>
-   </table></div>
-  </div>
+  <div class="pane active" id="regionalPane"><p class="small-note">Sono considerate esclusivamente le righe del foglio BASE DATI in cui la colonna Tipo contiene “Regionali”. Per ogni disciplina e categoria, le regioni sono ordinate per numero di squadre in ordine decrescente.</p><div id="regionalContainer"></div></div>
+  <div class="pane" id="summaryPane"><p class="small-note">Per ogni disciplina e categoria, le regioni sono ordinate per numero di squadre in ordine decrescente.</p><div id="summaryContainer"></div></div>
+  <div class="pane" id="okPane"><div class="table-responsive"><table id="okTable" class="table table-striped table-hover w-100"><thead><tr><th>Disciplina</th><th>Categoria</th><th>Regione</th><th>Comitato</th><th>Squadre</th><th>Note</th></tr></thead></table></div></div>
+  <div class="pane" id="notPane"><div class="table-responsive"><table id="notTable" class="table table-striped table-hover w-100"><thead><tr><th>Disciplina</th><th>Categoria</th><th>Regione</th><th>Comitato</th><th>Squadre</th><th>Note</th></tr></thead></table></div></div>
+  <div class="pane" id="allPane"><h3 class="h5" style="color:var(--ok)">Campionati che soddisfano il C.U.</h3><div class="table-responsive mb-4"><table id="okAllTable" class="table table-striped table-hover w-100"><thead><tr><th>Disciplina</th><th>Categoria</th><th>Regione</th><th>Comitato</th><th>Squadre</th><th>Note</th></tr></thead></table></div><h3 class="h5" style="color:var(--warn)">Campionati che non soddisfano il C.U.</h3><div class="table-responsive"><table id="notAllTable" class="table table-striped table-hover w-100"><thead><tr><th>Disciplina</th><th>Categoria</th><th>Regione</th><th>Comitato</th><th>Squadre</th><th>Note</th></tr></thead></table></div></div>
  </section>
  <footer class="text-center small-note mt-4">CSI · Centro Sportivo Italiano</footer>
 </main>
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
-<script src="data.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script><script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script><script src="data.js"></script>
 <script>
-const norm = v => (v ?? '').toString().trim();
-const esc = s => $('<div>').text(norm(s)).html();
-const fmt = n => Number(n || 0).toLocaleString('it-IT');
-
-function fillSelect(id, values){
- const select=document.getElementById(id);
- values.forEach(v=>select.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));
-}
-fillSelect('fDisc',[...new Set(BASE_DATA.map(x=>x.Disciplina))].sort((a,b)=>a.localeCompare(b,'it')));
-fillSelect('fCat',[...new Set(BASE_DATA.map(x=>x.Categoria).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it')));
-fillSelect('fReg',[...new Set(BASE_DATA.map(x=>x.Regione))].sort((a,b)=>a.localeCompare(b,'it')));
-fillSelect('fCom',[...new Set(BASE_DATA.map(x=>x.Comitato))].sort((a,b)=>a.localeCompare(b,'it')));
-
-function updateKpis(){
- const fDisc=norm($('#fDisc').val()),fCat=norm($('#fCat').val()),fReg=norm($('#fReg').val()),fCom=norm($('#fCom').val());
- const rows=BASE_DATA.filter(x=>(!fDisc||x.Disciplina===fDisc)&&(!fCat||x.Categoria===fCat)&&(!fReg||x.Regione===fReg)&&(!fCom||x.Comitato===fCom));
- document.getElementById('kpiTeams').textContent=fmt(rows.reduce((s,x)=>s+Number(x.Squadre||0),0));
- document.getElementById('kpiActivities').textContent=new Set(rows.map(x=>norm(x.Disciplina)).filter(Boolean)).size;
- document.getElementById('kpiCommittees').textContent=new Set(rows.map(x=>norm(x.Comitato)).filter(Boolean)).size;
- document.getElementById('kpiNotOk').textContent=rows.filter(x=>x.Status==='Non soddisfa C.U.').length;
-}
-updateKpis();
-
-function tableData(status){
- return BASE_DATA.filter(x=>{
-  const tipo=norm(x.Tipo).toLocaleLowerCase('it');
-  return x.Status===status && !tipo.startsWith('regional');
- }).map(x=>[
-  x.Disciplina,x.Categoria,x.Regione,x.Comitato,x.Squadre,
-  x.Note ? `<span class="note-pill">${esc(x.Note)}</span>` : ''
- ]);
-}
-const dtBase={
- pageLength:25,
- order:[[0,'asc'],[1,'asc'],[4,'desc']],
- language:{url:'https://cdn.datatables.net/plug-ins/1.13.8/i18n/it-IT.json'},
- columnDefs:[{targets:4,type:'num',className:'text-end'}]
-};
-const okTable=$('#okTable').DataTable({...dtBase,data:tableData('Soddisfa C.U.')});
-const notTable=$('#notTable').DataTable({...dtBase,data:tableData('Non soddisfa C.U.')});
-const okAllTable=$('#okAllTable').DataTable({...dtBase,data:tableData('Soddisfa C.U.'),paging:false,info:false});
-const notAllTable=$('#notAllTable').DataTable({...dtBase,data:tableData('Non soddisfa C.U.'),paging:false,info:false});
-document.getElementById('okCount').textContent=okTable.rows().count();
-document.getElementById('notCount').textContent=notTable.rows().count();
-
-function renderSummary(){
- const fDisc=norm($('#fDisc').val()),fCat=norm($('#fCat').val()),fReg=norm($('#fReg').val());
- const rows=SUMMARY_DATA.filter(x=>(!fDisc||x.Disciplina===fDisc)&&(!fCat||x.Categoria===fCat)&&(!fReg||x.Regione===fReg));
- const groups={};
- rows.forEach(x=>{
-  const key=x.Disciplina+'|||'+x.Categoria;
-  (groups[key]??=[]).push(x);
- });
- let out='';
- Object.keys(groups).sort((a,b)=>a.localeCompare(b,'it')).forEach(key=>{
-  const [disc,cat]=key.split('|||');
-  const items=groups[key].map(x=>{
-   const regionalSquadre=BASE_DATA.filter(r=>{
-    const tipo=norm(r.Tipo).toLocaleLowerCase('it');
-    return tipo.startsWith('regional') &&
-           r.Disciplina===x.Disciplina &&
-           r.Categoria===x.Categoria &&
-           r.Regione===x.Regione;
-   }).reduce((sum,r)=>sum+Number(r.Squadre||0),0);
-   const totaleSquadre=Number(x.Squadre||0);
-   return {...x, Regionali:regionalSquadre, Provinciali:Math.max(0,totaleSquadre-regionalSquadre)};
-  }).sort((a,b)=>b.Squadre-a.Squadre || a.Regione.localeCompare(b.Regione,'it'));
-  const totale=items.reduce((sum,x)=>sum+Number(x.Squadre||0),0);
-  out+=`<div class="group-card"><div class="group-title" style="justify-content:flex-start;gap:18px"><span>${esc(disc)} · ${esc(cat)}</span><span>${fmt(totale)} squadre</span></div>
-  <div class="table-responsive"><table class="table table-sm table-striped summary-table mb-0">
-  <thead><tr><th>Regione</th><th>Squadre regionali</th><th>Squadre provinciali</th></tr></thead><tbody>`;
-  items.forEach(x=>out+=`<tr><td>${esc(x.Regione)}</td><td><strong>${fmt(x.Regionali)}</strong></td><td><strong>${fmt(x.Provinciali)}</strong></td></tr>`);
-  out+='</tbody></table></div></div>';
- });
- document.getElementById('summaryContainer').innerHTML=out||'<div class="text-muted">Nessun dato corrispondente ai filtri.</div>';
-}
-function renderRegionalSummary(){
- const fDisc=norm($('#fDisc').val()),fCat=norm($('#fCat').val()),fReg=norm($('#fReg').val()),fCom=norm($('#fCom').val());
-
- const regionalRows=BASE_DATA.filter(x=>{
-  const tipo=norm(x.Tipo).toLocaleLowerCase('it');
-  return tipo.startsWith('regional') &&
-         (!fDisc||x.Disciplina===fDisc) &&
-         (!fCat||x.Categoria===fCat) &&
-         (!fReg||x.Regione===fReg) &&
-         (!fCom||x.Comitato===fCom);
- });
-
- const aggregate={};
- regionalRows.forEach(x=>{
-  const key=x.Disciplina+'|||'+x.Categoria+'|||'+x.Regione;
-  if(!aggregate[key]){
-   aggregate[key]={
-    Disciplina:x.Disciplina,
-    Categoria:x.Categoria,
-    Regione:x.Regione,
-    Squadre:0,
-    Comitati:new Set()
-   };
-  }
-  aggregate[key].Squadre+=Number(x.Squadre||0);
-  if(norm(x.Comitato)) aggregate[key].Comitati.add(x.Comitato);
- });
-
- const grouped={};
- Object.values(aggregate).forEach(x=>{
-  const key=x.Disciplina+'|||'+x.Categoria;
-  (grouped[key]??=[]).push(x);
- });
-
- let out='';
- Object.keys(grouped).sort((a,b)=>a.localeCompare(b,'it')).forEach(key=>{
-  const [disc,cat]=key.split('|||');
-  const items=grouped[key].sort((a,b)=>b.Squadre-a.Squadre || a.Regione.localeCompare(b.Regione,'it'));
-  out+=`<div class="group-card"><div class="group-title"><span>${esc(disc)} · ${esc(cat)}</span><span>${fmt(items.reduce((s,x)=>s+x.Squadre,0))} squadre</span></div>
-  <div class="table-responsive"><table class="table table-sm table-striped summary-table mb-0">
-  <thead><tr><th>Regione</th><th>Squadre</th></tr></thead><tbody>`;
-  items.forEach(x=>out+=`<tr><td>${esc(x.Regione)}</td><td><strong>${fmt(x.Squadre)}</strong></td></tr>`);
-  out+='</tbody></table></div></div>';
- });
-
- document.getElementById('regionalContainer').innerHTML=out||'<div class="text-muted">Nessuna attività regionale corrispondente ai filtri.</div>';
- document.getElementById('regionalCount').textContent=regionalRows.length;
-}
-
-function applyFilters(){
- const vals=[norm($('#fDisc').val()),norm($('#fCat').val()),norm($('#fReg').val()),norm($('#fCom').val())];
- [okTable,notTable,okAllTable,notAllTable].forEach(t=>{
-  vals.forEach((v,i)=>t.column(i).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false));
-  t.draw();
- });
- renderSummary();
- renderRegionalSummary();
- updateKpis();
-}
-$('#fDisc,#fCat,#fReg,#fCom').on('change',applyFilters);
-$('#resetFilters').on('click',()=>{$('#fDisc,#fCat,#fReg,#fCom').val('');applyFilters();});
-document.querySelectorAll('.tabbtn').forEach(btn=>btn.addEventListener('click',()=>{
- document.querySelectorAll('.tabbtn').forEach(x=>x.classList.remove('active'));
- document.querySelectorAll('.pane').forEach(x=>x.classList.remove('active'));
- btn.classList.add('active');
- document.getElementById(btn.dataset.pane).classList.add('active');
- setTimeout(()=>$.fn.dataTable.tables({visible:true,api:true}).columns.adjust(),50);
-}));
-renderSummary();
-renderRegionalSummary();
-</script>
-</body>
-</html>
+const norm=v=>(v??'').toString().trim();const esc=s=>$('<div>').text(norm(s)).html();const fmt=n=>Number(n||0).toLocaleString('it-IT');
+function fillSelect(id,values){const select=document.getElementById(id);values.forEach(v=>select.insertAdjacentHTML('beforeend',`<option value="${esc(v)}">${esc(v)}</option>`));}
+fillSelect('fDisc',[...new Set(BASE_DATA.map(x=>x.Disciplina))].sort((a,b)=>a.localeCompare(b,'it')));fillSelect('fCat',[...new Set(BASE_DATA.map(x=>x.Categoria).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it')));fillSelect('fReg',[...new Set(BASE_DATA.map(x=>x.Regione))].sort((a,b)=>a.localeCompare(b,'it')));fillSelect('fCom',[...new Set(BASE_DATA.map(x=>x.Comitato))].sort((a,b)=>a.localeCompare(b,'it')));
+function updateKpis(){const fDisc=norm($('#fDisc').val()),fCat=norm($('#fCat').val()),fReg=norm($('#fReg').val()),fCom=norm($('#fCom').val());const rows=BASE_DATA.filter(x=>(!fDisc||x.Disciplina===fDisc)&&(!fCat||x.Categoria===fCat)&&(!fReg||x.Regione===fReg)&&(!fCom||x.Comitato===fCom));document.getElementById('kpiTeams').textContent=fmt(rows.reduce((s,x)=>s+Number(x.Squadre||0),0));document.getElementById('kpiActivities').textContent=new Set(rows.map(x=>norm(x.Disciplina)).filter(Boolean)).size;document.getElementById('kpiCommittees').textContent=new Set(rows.map(x=>norm(x.Comitato)).filter(Boolean)).size;document.getElementById('kpiNotOk').textContent=rows.filter(x=>x.Status==='Non soddisfa C.U.').length;}updateKpis();
+function tableData(status){return BASE_DATA.filter(x=>{const tipo=norm(x.Tipo).toLocaleLowerCase('it');return x.Status===status&&!tipo.startsWith('regional');}).map(x=>[x.Disciplina,x.Categoria,x.Regione,x.Comitato,x.Squadre,x.Note?`<span class="note-pill">${esc(x.Note)}</span>`:'']);}
+const dtBase={pageLength:25,order:[[0,'asc'],[1,'asc'],[4,'desc']],language:{url:'https://cdn.jsdelivr.net/plug-ins/1.13.8/i18n/it-IT.json'},columnDefs:[{targets:4,type:'num',className:'text-end'}]};
+const okTable=$('#okTable').DataTable({...dtBase,data:tableData('Soddisfa C.U.')});const notTable=$('#notTable').DataTable({...dtBase,data:tableData('Non soddisfa C.U.')});const okAllTable=$('#okAllTable').DataTable({...dtBase,data:tableData('Soddisfa C.U.'),paging:false,info:false});const notAllTable=$('#notAllTable').DataTable({...dtBase,data:tableData('Non soddisfa C.U.'),paging:false,info:false});document.getElementById('okCount').textContent=okTable.rows().count();document.getElementById('notCount').textContent=notTable.rows().count();
+function renderSummary(){const fDisc=norm($('#fDisc').val()),fCat=norm($('#fCat').val()),fReg=norm($('#fReg').val());const rows=SUMMARY_DATA.filter(x=>(!fDisc||x.Disciplina===fDisc)&&(!fCat||x.Categoria===fCat)&&(!fReg||x.Regione===fReg));const groups={};rows.forEach(x=>{const key=x.Disciplina+'|||'+x.Categoria;(groups[key]??=[]).push(x);});let out='';Object.keys(groups).sort((a,b)=>a.localeCompare(b,'it')).forEach(key=>{const[disc,cat]=key.split('|||');const items=groups[key].map(x=>{const regionalSquadre=BASE_DATA.filter(r=>{const tipo=norm(r.Tipo).toLocaleLowerCase('it');return tipo.startsWith('regional')&&r.Disciplina===x.Disciplina&&r.Categoria===x.Categoria&&r.Regione===x.Regione;}).reduce((sum,r)=>sum+Number(r.Squadre||0),0);const totaleSquadre=Number(x.Squadre||0);return{...x,Regionali:regionalSquadre,Provinciali:Math.max(0,totaleSquadre-regionalSquadre)};}).sort((a,b)=>b.Squadre-a.Squadre||a.Regione.localeCompare(b.Regione,'it'));const totale=items.reduce((sum,x)=>sum+Number(x.Squadre||0),0);out+=`<div class="group-card"><div class="group-title" style="justify-content:flex-start;gap:18px"><span>${esc(disc)} · ${esc(cat)}</span><span>${fmt(totale)} squadre</span></div><div class="table-responsive"><table class="table table-sm table-striped summary-table mb-0"><thead><tr><th>Regione</th><th>Squadre regionali</th><th>Squadre provinciali</th></tr></thead><tbody>`;items.forEach(x=>out+=`<tr><td>${esc(x.Regione)}</td><td><strong>${fmt(x.Regionali)}</strong></td><td><strong>${fmt(x.Provinciali)}</strong></td></tr>`);out+='</tbody></table></div></div>';});document.getElementById('summaryContainer').innerHTML=out||'<div class="text-muted">Nessun dato corrispondente ai filtri.</div>';}
+function renderRegionalSummary(){const fDisc=norm($('#fDisc').val()),fCat=norm($('#fCat').val()),fReg=norm($('#fReg').val()),fCom=norm($('#fCom').val());const regionalRows=BASE_DATA.filter(x=>{const tipo=norm(x.Tipo).toLocaleLowerCase('it');return tipo.startsWith('regional')&&(!fDisc||x.Disciplina===fDisc)&&(!fCat||x.Categoria===fCat)&&(!fReg||x.Regione===fReg)&&(!fCom||x.Comitato===fCom);});const aggregate={};regionalRows.forEach(x=>{const key=x.Disciplina+'|||'+x.Categoria+'|||'+x.Regione;if(!aggregate[key])aggregate[key]={Disciplina:x.Disciplina,Categoria:x.Categoria,Regione:x.Regione,Squadre:0,Comitati:new Set()};aggregate[key].Squadre+=Number(x.Squadre||0);if(norm(x.Comitato))aggregate[key].Comitati.add(x.Comitato);});const grouped={};Object.values(aggregate).forEach(x=>{const key=x.Disciplina+'|||'+x.Categoria;(grouped[key]??=[]).push(x);});let out='';Object.keys(grouped).sort((a,b)=>a.localeCompare(b,'it')).forEach(key=>{const[disc,cat]=key.split('|||');const items=grouped[key].sort((a,b)=>b.Squadre-a.Squadre||a.Regione.localeCompare(b.Regione,'it'));out+=`<div class="group-card"><div class="group-title"><span>${esc(disc)} · ${esc(cat)}</span><span>${fmt(items.reduce((s,x)=>s+x.Squadre,0))} squadre</span></div><div class="table-responsive"><table class="table table-sm table-striped summary-table mb-0"><thead><tr><th>Regione</th><th>Squadre</th></tr></thead><tbody>`;items.forEach(x=>out+=`<tr><td>${esc(x.Regione)}</td><td><strong>${fmt(x.Squadre)}</strong></td></tr>`);out+='</tbody></table></div></div>';});document.getElementById('regionalContainer').innerHTML=out||'<div class="text-muted">Nessuna attività regionale corrispondente ai filtri.</div>';document.getElementById('regionalCount').textContent=regionalRows.length;}
+function applyFilters(){const vals=[norm($('#fDisc').val()),norm($('#fCat').val()),norm($('#fReg').val()),norm($('#fCom').val())];[okTable,notTable,okAllTable,notAllTable].forEach(t=>{vals.forEach((v,i)=>t.column(i).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false));t.draw();});renderSummary();renderRegionalSummary();updateKpis();}
+$('#fDisc,#fCat,#fReg,#fCom').on('change',applyFilters);$('#resetFilters').on('click',()=>{$('#fDisc,#fCat,#fReg,#fCom').val('');applyFilters();});document.querySelectorAll('.tabbtn').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tabbtn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.pane').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.getElementById(btn.dataset.pane).classList.add('active');setTimeout(()=>$.fn.dataTable.tables({visible:true,api:true}).columns.adjust(),50);}));renderSummary();renderRegionalSummary();
+</script></body></html>
